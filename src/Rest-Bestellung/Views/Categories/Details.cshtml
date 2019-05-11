@@ -1,0 +1,35 @@
+﻿@model Rest_Bestellung.Models.Category
+
+@{
+    ViewData["Title"] = "Details";
+}
+<br />
+<h2>Category type Details</h2>
+<br />
+
+<div class="form-border">
+    <fieldset disabled>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Name" class="custom-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="Name" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="DisplayOder" class="custom-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="DisplayOder" class="form-control"></input>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<br />
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-success">Back to List</a>
+</div>

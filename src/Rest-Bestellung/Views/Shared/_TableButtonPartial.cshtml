@@ -1,0 +1,26 @@
+﻿@model int
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+@*We are adding this code, to get the edit, delete, details buttons in one class
+    To get the id from control class, we created the model `int`
+    *@
+<td style="width: 150px">
+    <div class="btn-group" role ="group">
+        <a type="button" class="btn btn-primary" href="@Url.Action("Edit/" + Model)">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a type="button" class="btn btn-danger" href="@Url.Action("Delete/" + Model)">
+            <i class="far fa-trash-alt"></i>
+        </a>
+        <a type="button" class="btn btn-success" href="@Url.Action("Details/" + Model)">
+            <i class="fas fa-info-circle"></i>
+        </a>
+
+    </div>
+
+</td>
