@@ -17,7 +17,6 @@ namespace Rest_Bestellung.Models
         public string Name { get; set; }
         [Required]
         [Display(Name = "Category")]
-
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")] public virtual Category Category { get; set; }
 
