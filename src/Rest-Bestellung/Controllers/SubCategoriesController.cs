@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Rest_Bestellung.Data;
+using Rest_Bestellung.Models;
+using Rest_Bestellung.Models.SubCategoryViewModels;
 
 namespace Rest_Bestellung.Controllers
 {
@@ -27,5 +29,20 @@ namespace Rest_Bestellung.Controllers
             var subCategory = _db.SubCategory.Include(s => s.Category);
             return View(await subCategory.ToListAsync());
         }
+        // SubCategory Create Action
+
+        public IActionResult Create()
+        {
+            // the subcategories and category field model and we'll have to pass that model to the view.
+            SubCategoryAndCategoryViewModel modeSubCategoriesController = new SubCategoryAndCategoryViewModel()
+            {
+                CategoryList = _db.Category.ToList(),
+                SubCategory = new SubCategory(),
+                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToList()
+
+            };
+            return View(modeSubCategoriesController);
+        }
+
     }
 }
