@@ -14,6 +14,8 @@ namespace Rest_Bestellung.Controllers
     {
         // Adding connection to database:
         private readonly ApplicationDbContext _db;
+        // To show the statusMessage in the Control
+        [TempData] public string StatusMessage { get; set; }
         // Contractual to use dependency injection
         // So with this we've done with the dependency injection to inject the application D-B context inside our
         public SubCategoriesController(ApplicationDbContext db)
