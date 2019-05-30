@@ -45,6 +45,48 @@ namespace Rest_Bestellung.Controllers
             };
             return View(modeSubCategoriesController);
         }
-
+        // Post Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(SubCategoryAndCategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var doesSubCategoryExits = _db.SubCategory.Count(s => s.Name == model.SubCategory.Name);
+                var doesSubCatAndCatExists = _db.SubCategory.Count(s => s.Name == model.SubCategory.Name && s.CategoryId == model.SubCategory.CategoryId);
+                if (doesSubCategoryExits > 0 && model.isNew)
+                {
+                    StatusMessage = "Error: Sub Category Name already Exists";
+                }
+                else
+                {
+                    if (doesSubCategoryExits == 0 && !model.isNew)
+                    {
+                        StatusMessage = "Subcategory does not exists";
+                    }
+                    else
+                    {
+                        if (doesSubCatAndCatExists > 0)
+                        {
+                            //error
+                            StatusMessage = "Error: Category and Sub Category combination exists";
+                        }
+                        else
+                        {
+                            _db.Add(model.SubCategory);
+                            await _db.SaveChangesAsync();
+                            return RedirectToAction(nameof(Index));
+                        }
+                    }
+                }
+            }
+            SubCategoryAndCategoryViewModel ModelVM = new SubCategoryAndCategoryViewModel()
+            {
+                CategoryList = _db.Category.ToList(),
+                SubCategory = model.SubCategory,
+                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToList()
+            };
+            return View(ModelVM);
+        }
     }
 }
