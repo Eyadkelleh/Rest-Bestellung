@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +12,10 @@ namespace Rest_Bestellung.Controllers
     {
         // Adding connection to database:
         private readonly ApplicationDbContext _db;
+
         // To show the statusMessage in the Control
         [TempData] public string StatusMessage { get; set; }
+
         // Contractual to use dependency injection
         // So with this we've done with the dependency injection to inject the application D-B context inside our
         public SubCategoriesController(ApplicationDbContext db)
@@ -40,11 +40,11 @@ namespace Rest_Bestellung.Controllers
             {
                 CategoryList = _db.Category.ToList(),
                 SubCategory = new SubCategory(),
-                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToList()
-
+                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Distinct().Select(p => p.Name).ToList()
             };
             return View(modeSubCategoriesController);
         }
+
         // Post Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -53,7 +53,8 @@ namespace Rest_Bestellung.Controllers
             if (ModelState.IsValid)
             {
                 var doesSubCategoryExits = _db.SubCategory.Count(s => s.Name == model.SubCategory.Name);
-                var doesSubCatAndCatExists = _db.SubCategory.Count(s => s.Name == model.SubCategory.Name && s.CategoryId == model.SubCategory.CategoryId);
+                var doesSubCatAndCatExists = _db.SubCategory.Count(s =>
+                    s.Name == model.SubCategory.Name && s.CategoryId == model.SubCategory.CategoryId);
                 if (doesSubCategoryExits > 0 && model.isNew)
                 {
                     StatusMessage = "Error: Sub Category Name already Exists";
@@ -80,13 +81,38 @@ namespace Rest_Bestellung.Controllers
                     }
                 }
             }
+
             SubCategoryAndCategoryViewModel ModelVM = new SubCategoryAndCategoryViewModel()
             {
                 CategoryList = _db.Category.ToList(),
                 SubCategory = model.SubCategory,
-                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToList()
+                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToList(),
+                StatusMessage = StatusMessage
             };
             return View(ModelVM);
+        }
+        //GET Edit
+        // we are receiving an ID with 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var subCategorie = await _db.SubCategory.SingleOrDefaultAsync(m => m.Id == id);
+            if (subCategorie == null)
+            {
+                return NotFound();
+            }
+
+            SubCategoryAndCategoryViewModel model = new SubCategoryAndCategoryViewModel()
+            {
+                CategoryList = _db.Category.ToList(),
+                SubCategory = subCategorie,
+                SubCategoryList = _db.SubCategory.Select(p => p.Name).Distinct().ToList(),
+            };
+            return View(model);
         }
     }
 }
