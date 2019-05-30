@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 <br />
-<h2>Create Sub Category</h2>
+<h2>Edit Sub Category</h2>
 <br />
 @Html.Partial("_StatusMessage", Model.StatusMessage);
 <hr/>
@@ -45,7 +45,7 @@
                     <a asp-action="Index" class="btn btn-success">Back to list</a>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-8">
                 @if (Model.SubCategoryList.Any())
                 {
                     <p>Existing Subcategories</p>
