@@ -12,7 +12,7 @@ namespace Rest_Bestellung.Controllers
 {
     public class CategoriesController : Controller
     {
-        // from the database
+        // Adding connection to database
         private readonly ApplicationDbContext _context;
         // We should think this is like a cloud, so that cloud we habe application DB- context and all the other 
         // objects which we want to use in our view and it will automatically fetch the application DBcontext object from the cloud.
@@ -31,7 +31,7 @@ namespace Rest_Bestellung.Controllers
             return View(await _context.Category.ToListAsync());
         }
 
-        // inside that details view for that base on that id be able to retrieve what's there inside a database
+        // inside that details view for that base on that id be able to receive what's there inside a database
         // So first we check if ID is now then we turn and not found.
         // and if we don't know we'll go to the database and find everything inside this category readable.
         // why we are you using Singleordefault to make sure when it is empty that take the default value 
