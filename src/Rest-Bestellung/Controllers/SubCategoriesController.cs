@@ -114,5 +114,44 @@ namespace Rest_Bestellung.Controllers
             };
             return View(model);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, SubCategoryAndCategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var doesSubCategoryExits = _db.SubCategory.Count(s => s.Name == model.SubCategory.Name);
+                var doesSubCatAndCatExists = _db.SubCategory.Count(s =>
+                    s.Name == model.SubCategory.Name && s.CategoryId == model.SubCategory.CategoryId);
+                if (doesSubCategoryExits == 0)
+                {
+                    StatusMessage = "Error: Sub Category does not exists. You cannot add a new subcategory hier.";
+                }
+                else
+                {
+                    if (doesSubCatAndCatExists > 0)
+                    {
+                        StatusMessage = "Error: Category and Sub Category combination already exists";
+                    }
+                    else
+                    {
+                        var subCatFromDb = _db.SubCategory.Find(id);
+                        subCatFromDb.Name = model.SubCategory.Name;
+                        subCatFromDb.CategoryId = model.SubCategory.CategoryId;
+                        await _db.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+            }
+            SubCategoryAndCategoryViewModel modelVM = new SubCategoryAndCategoryViewModel()
+            {
+                CategoryList = _db.Category.ToList(),
+                SubCategory = model.SubCategory,
+                SubCategoryList = _db.SubCategory.Select(p => p.Name).Distinct().ToList(),
+                StatusMessage = StatusMessage
+            };
+            return View(modelVM);
+        }
     }
 }
