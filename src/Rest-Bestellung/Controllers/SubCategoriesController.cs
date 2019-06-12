@@ -153,5 +153,49 @@ namespace Rest_Bestellung.Controllers
             };
             return View(modelVM);
         }
+
+        //Get Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var subCategoty = _db.SubCategory.Include(s => s.Category).SingleOrDefault(m => m.Id == id);
+            if (subCategoty == null)
+            {
+                return NotFound();
+            }
+
+            return View(subCategoty);
+        }
+
+        // Get Delete
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var subCategoty = _db.SubCategory.Include(s => s.Category).SingleOrDefault(m => m.Id == id);
+            if (subCategoty == null)
+            {
+                return NotFound();
+            }
+
+            return View(subCategoty);
+        }
+        // Post method for delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var SubCategory = await _db.SubCategory.SingleOrDefaultAsync(m => m.Id == id);
+            _db.SubCategory.Remove(SubCategory);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
