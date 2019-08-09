@@ -17,7 +17,7 @@ namespace Rest_Bestellung.Controllers
         // We should think this is like a cloud, so that cloud we habe application DB- context and all the other 
         // objects which we want to use in our view and it will automatically fetch the application DBcontext object from the cloud.
         // This is part of MVC .Core
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context)   
         {
             _context = context;
         }

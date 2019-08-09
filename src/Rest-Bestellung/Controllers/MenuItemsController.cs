@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Rest_Bestellung.Data;
 using Rest_BestellungBestellung.Models.MenuItemViewModels;
 
@@ -29,8 +30,10 @@ namespace Rest_Bestellung.Controllers
             };
         }
         // Get: Menu-item
+        // Here you well be able to 
         public IActionResult Index()
         {
+            var menuItems = applicationDb.MenItems.Include(m => m.Category).Include(m => m.SubCategory);
             return View();
         }
     }
