@@ -17,6 +17,8 @@ namespace Rest_Bestellung.Data
         // We added as public to have access this outside of this class
         public DbSet<Category> Category { get; set; }
         public  DbSet<SubCategory> SubCategory { get; set; }
+        public DbSet<Item> MenItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -22,13 +22,17 @@ namespace Rest_Bestellung.Models
         }
         [Range(1,Int32.MaxValue,ErrorMessage = "Price should be greater that (1)$")]
         public double Price { get; set; }
+
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
-        [ForeignKey("Category")]
+
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
+
         [Display(Name = "SubCategory")]
         public int SubCategoryId { get; set; }
-        [ForeignKey("SubCategory")]
+
+        [ForeignKey("SubCategoryId")]
         public virtual SubCategory SubCategory { get; set; }
 
     }
