@@ -221,7 +221,7 @@ namespace Rest_Bestellung.Data.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("MenItems");
+                    b.ToTable("MenuItems");
                 });
 
             modelBuilder.Entity("Rest_Bestellung.Models.SubCategory", b =>

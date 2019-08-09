@@ -10,7 +10,7 @@ namespace Rest_Bestellung.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "MenItems",
+                name: "MenuItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -42,19 +42,19 @@ namespace Rest_Bestellung.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenItems_CategoryId",
-                table: "MenItems",
+                table: "MenuItems",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenItems_SubCategoryId",
-                table: "MenItems",
+                table: "MenuItems",
                 column: "SubCategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MenItems");
+                name: "MenuItems");
         }
     }
 }

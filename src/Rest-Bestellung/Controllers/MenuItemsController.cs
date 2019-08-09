@@ -33,7 +33,7 @@ namespace Rest_Bestellung.Controllers
         // Here you well be able to 
         public IActionResult Index()
         {
-            var menuItems = applicationDb.MenItems.Include(m => m.Category).Include(m => m.SubCategory);
+            var menuItems = applicationDb.MenuItems.Include(m => m.Category).Include(m => m.SubCategory);
             return View();
         }
     }
